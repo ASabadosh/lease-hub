@@ -1,6 +1,14 @@
-import Image from "next/image";
+import { createClient } from "@/utils/supabase/client";
+
+const supabase = createClient();
+
+async function getLeases() {
+    await supabase.from("leases").select("*");
+}
 
 export default function Home() {
+
+  const leases = getLeases();
   return (
     <main>
       <div className="flex">
