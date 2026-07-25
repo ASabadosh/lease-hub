@@ -3,7 +3,13 @@ import { createClient } from "@/utils/supabase/client";
 const supabase = createClient();
 
 async function getLeases() {
-    await supabase.from("leases").select("*");
+  const {data, error} =await supabase.from("leases").select("*");
+
+  if (error) {
+    console.error("Error fetching leases:", error);
+  }
+
+  return data;
 }
 
 export default function Home() {
