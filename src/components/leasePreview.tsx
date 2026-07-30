@@ -1,6 +1,13 @@
 import { Lease } from "@/models/Lease";
+import { title } from "process";
 
-export default function LeasePreview(props: Lease) {
+type LeasePreviewProps = {
+    id: number;
+    title: string;
+}
+
+
+export default function LeasePreview(props: LeasePreviewProps) {
     return (
         <div>
             <h3 className="text-left text-sm font-semibold text-gray-900">
