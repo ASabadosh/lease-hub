@@ -1,12 +1,13 @@
 import LeaseDisplay from "@/components/leaseDisplay";
 import { getLeases } from "@/database/getLeases";
-import { Lease } from "@/models/Lease";
+import { getAdditionalLeaseFields } from "@/database/getAdditionalLeaseFields";
 
 export default async function Home() {
 
   const leases = await getLeases();
+  const additional_lease_fields = await getAdditionalLeaseFields();
 
-  if (leases === null) {
+  if (leases === null || additional_lease_fields === null) {
     return (
       <div className = "flex flex-col items-center justify-center h-screen">
         <h2 className="text-xl font-semibold text-gray-900">
@@ -23,6 +24,6 @@ export default async function Home() {
       </div>
     )
   } else return(
-  <LeaseDisplay leases={leases} />
+  <LeaseDisplay leases={leases} additional_lease_fields={additional_lease_fields} />
   )
 }

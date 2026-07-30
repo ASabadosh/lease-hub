@@ -1,19 +1,24 @@
 "use client";
-import { getLeases } from "@/database/getLeases";
 import LeasePreview from "@/components/leasePreview";
 import LeaseTable from "@/components/leaseTable";
 import { Lease } from "@/models/Lease";
+import { AdditionalLeaseFieldObject } from "@/models/AdditionalLeaseFieldObject";
 import { useState } from "react";
 
 type LeaseDisplayProps = {
   leases: Lease[];
+  additional_lease_fields: AdditionalLeaseFieldObject[];
 };
 
-export default function LeaseDisplay({leases} : LeaseDisplayProps) {
+export default function LeaseDisplay({leases, additional_lease_fields} : LeaseDisplayProps) {
 
   const [selected_lease, setLease] = useState<Lease | null>(null);
+  const [selected_additional_lease_fields, setAdditionalLeaseFields] = useState<AdditionalLeaseFieldObject[]>([]);
+
 
   async function handleClick(lease: Lease) {
+    const filteredFields = additional_lease_fields.filter((field) => field.lease_id === lease.id);
+    setAdditionalLeaseFields(filteredFields);
     setLease(lease);
   }
 
@@ -36,8 +41,8 @@ export default function LeaseDisplay({leases} : LeaseDisplayProps) {
         </div>
         </div>
      { selected_lease ? <LeaseTable
-      id={selected_lease.id}
-      title={selected_lease.title}
+      lease={selected_lease}
+      additional_lease_fields={selected_additional_lease_fields}
       /> : <h3> Select a lease to view and edit details</h3> }
      </div>
     </main>
