@@ -1,5 +1,5 @@
 //represents row from additional_lease_fields table in database
-export type AdditionalLeaseFieldObject = {
+export type AdditionalLeaseField = {
     id: number;
     lease_id: number;
     field: string;
