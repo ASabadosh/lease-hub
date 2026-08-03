@@ -23,28 +23,31 @@ export default function LeaseDisplay({leases, additional_lease_fields} : LeaseDi
   }
 
   return (
-    <main>
       <div className="flex">
-      <div className="flex flex-col w-70 h-[600px] p-5 border-r border-b border-l border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-900">
-            All Leases
-        </h2>
-        <div className="flex flex-col mt-4 gap-1">
-        {leases.map((lease: Lease) => (
-          <button onClick={() => handleClick(lease)} key={lease.id} className="flex cursor-pointer rounded-sm border border-gray-200 bg-white p-4 transition-colors hover:bg-gray-50">
-            <LeasePreview
-            id={lease.id}
-            title={lease.title}
-            />
-          </button>
-        ))}
+        <div className="flex flex-col w-70 h-[600px] p-5 border-r border-b border-l border-gray-200 bg-white">
+            <h2 className="text-xl font-semibold text-gray-900">
+                All Leases
+            </h2>
+            <div className="flex flex-col mt-4 gap-1">
+                {leases.map((lease: Lease) => (
+                    <button onClick={() => handleClick(lease)} key={lease.id} className="flex cursor-pointer rounded-sm border border-gray-200 bg-white p-4 transition-colors hover:bg-gray-50">
+                        <LeasePreview
+                        id={lease.id}
+                        title={lease.title}
+                        />
+                    </button>
+                ))}
+            </div>
         </div>
+        <div className="min-w-0 flex-1">
+        { 
+        selected_lease ? <LeaseTable
+        lease={selected_lease}
+        additional_lease_fields={selected_additional_lease_fields}
+        /> : 
+        <h3> Select a lease to view and edit details</h3> 
+        }
         </div>
-     { selected_lease ? <LeaseTable
-      lease={selected_lease}
-      additional_lease_fields={selected_additional_lease_fields}
-      /> : <h3> Select a lease to view and edit details</h3> }
      </div>
-    </main>
   );
 }

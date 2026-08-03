@@ -1,5 +1,6 @@
 import type { LeaseFieldObject } from "./LeaseFieldObject";
 
+//represents row from leases table in database
 export type Lease = {
     id: number
     title: string;

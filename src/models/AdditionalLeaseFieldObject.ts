@@ -1,3 +1,4 @@
+//represents row from additional_lease_fields table in database
 export type AdditionalLeaseFieldObject = {
     id: number;
     lease_id: number;
