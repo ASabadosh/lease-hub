@@ -1,9 +1,12 @@
+import "react-tabulator/lib/css/tabulator.min.css";
 import 'react-tabulator/lib/styles.css';
-import { ReactTabulator } from 'react-tabulator'
+import { ReactTabulator } from 'react-tabulator';
 import { Lease } from '@/models/Lease'; 
 import { LeaseFieldObject } from '@/models/LeaseFieldObject';
 import { AdditionalLeaseFieldObject } from '@/models/AdditionalLeaseFieldObject';
-import { getAdditionalLeaseFields } from '@/database/getAdditionalLeaseFields';
+import styles from './leaseTable.module.css';
+import { addAdditionalLeaseField } from "@/database/addAdditionalLeaseField";
+
 
 type LeaseTableProps = {
     lease: Lease;
@@ -11,10 +14,37 @@ type LeaseTableProps = {
     };
 
 const columns = [
-  { title: "Field", field: "field"},
-  { title: "Value", field: "value"},
-  { title: "Confirmed", field: "confirmed"},
-  { title: "Clauses", field: "clauses" }
+    { 
+        title: "Key Information", 
+        field: "field",
+        formatter: "textarea", 
+        widthGrow: 1,
+        variableHeight: true,
+        headerSort: false,
+    },
+    { 
+        title: "Value", 
+        field: "value", 
+        formatter: "textarea", 
+        widthGrow: 3, 
+        variableHeight: true,
+        headerSort: false,
+    },
+    { 
+        title: "Confirmed", 
+        field: "confirmed",
+        formatter: "tickCross",
+        widthGrow: 1,
+        headerSort: false,
+    },
+    { 
+        title: "Clauses", 
+        field: "clauses",
+        formatter: "textarea", 
+        widthGrow: 1, 
+        variableHeight: true,
+        headerSort: false,
+    },
 ];
 
 function isLeaseFieldObject(value: unknown): value is LeaseFieldObject {
@@ -26,6 +56,10 @@ function isLeaseFieldObject(value: unknown): value is LeaseFieldObject {
     "confirmed" in value &&
     "clauses" in value
   );
+}
+
+async function handleClick(lease: Lease) {
+    addAdditionalLeaseField(lease);
 }
 
 export default function LeaseTable({lease, additional_lease_fields}: LeaseTableProps) {
@@ -57,11 +91,23 @@ export default function LeaseTable({lease, additional_lease_fields}: LeaseTableP
     }
 
 return (
-    <ReactTabulator
- data={data}
- columns={columns}
- layout={"fitData"}
- />
-
+    <div className="flex flex-col p-5 bg-white">
+        <h1 className="text-2xl font-semibold tracking-tight text-gray-900 mb-5">
+            {lease.title}
+        </h1>
+        <div className={styles.wrapper}>
+            <ReactTabulator
+                data={data}
+                columns={columns}
+                options={{
+                    layout: "fitColumns",
+                    height: "470px",
+                }}
+            />
+        </div>
+        <button onClick={() => handleClick(lease)} className="h-10 w-full border border-gray-200 rounded-b-md text-sm font-medium text-blue-600 cursor-pointer transition-colors hover:bg-blue-50">
+        + Add Row
+        </button>
+    </div>
 );
 }

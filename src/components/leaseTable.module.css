@@ -1,0 +1,49 @@
+.wrapper {
+}
+
+/* targets entire table container */
+.wrapper :global(.tabulator) {
+  border-left: 1px solid #e5e7eb;
+  border-right: none;
+  border-bottom: none;
+  border-top: none;
+  font-size: 14px;
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+}
+
+/* targets entire header row container */
+.wrapper :global(.tabulator-header) {
+  background-color: transparent;
+  height: 30px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+}
+
+/* targets column header cells */
+.wrapper :global(.tabulator-col) {
+    border-right: none !important;
+    padding-left: 7px
+}
+
+.wrapper :global(.tabulator-row) {
+
+}
+
+.wrapper :global(.tabulator-cell) {
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px;
+}
+
+/* targets scroll bar */
+.wrapper :global(.tabulator-tableholder::-webkit-scrollbar) {
+  width: 0;
+  display: none;
+}
+
+/* targets column header cells */
+.wrapper :global(.tabulator-col-resize-handle) {
+  display: none;
+}
