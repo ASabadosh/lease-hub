@@ -4,22 +4,53 @@ import LeaseTable from "@/components/leaseTable";
 import { Lease } from "@/models/Lease";
 import { AdditionalLeaseField } from "@/models/AdditionalLeaseField";
 import { useState } from "react";
+import { TableRow } from "@/models/TableRow";
 
 type LeaseDisplayProps = {
   leases: Lease[];
-  additional_lease_fields: AdditionalLeaseField[];
+  additional_lease_fields: AdditionalLeaseField[]; //list from database
 };
 
 export default function LeaseDisplay({
   leases,
   additional_lease_fields,
 }: LeaseDisplayProps) {
-  const [selected_lease, setLease] = useState<Lease | null>(null);
-  const [additional_lease_fields_state, setAdditionalLeaseFieldsState] =
-    useState<AdditionalLeaseField[]>(additional_lease_fields);
+  const [updatedLeases, setUpdatedLeases] = useState<Lease[]>(leases);
+  const [selectedLease, setLease] = useState<Lease | null>(null);
+  //current list of fields: from database w/ user additions
+  const [updatedAdditionalLeaseFields, setUpdatedAdditionalLeaseFields] = useState<AdditionalLeaseField[]>(additional_lease_fields);
 
   function handleClick(lease: Lease) {
     setLease(lease);
+  }
+
+  // Update the "confirmed" value in either leases or additioanal fields
+  function onConfirmedUpdated(cell: any) {
+    const row = cell.getRow().getData();
+    const newValue = cell.getValue();
+    if (row.sourceTable === "leases") {
+        let updatedUpdatedLeases: any = updatedLeases;
+        for (const lease of updatedUpdatedLeases) {
+            //if (selectedLease) needed for typscript
+            if (selectedLease) {
+                if (lease.id === selectedLease.id) {
+                    lease[row.field].confirmed = newValue;
+                    break;
+                }
+            }
+        }   
+        setUpdatedLeases(updatedUpdatedLeases);
+    }
+    if (row.sourceTable === "additional_lease_fields") {
+        let updatedFields = updatedAdditionalLeaseFields;
+        for (const field of updatedFields) {
+            if (field.id === row.id) {
+                field.confirmed = newValue;
+                break;
+            }
+        }
+        setUpdatedAdditionalLeaseFields(updatedFields);
+    }
   }
 
   return (
@@ -27,7 +58,7 @@ export default function LeaseDisplay({
       <div className="flex flex-col w-70 h-[600px] p-5 border-r border-b border-l border-gray-200 bg-white">
         <h2 className="text-xl font-semibold text-gray-900">All Leases</h2>
         <div className="flex flex-col mt-4 gap-1">
-          {leases.map((lease: Lease) => (
+          {updatedLeases.map((lease: Lease) => (
             <button
               onClick={() => handleClick(lease)}
               key={lease.id}
@@ -39,18 +70,19 @@ export default function LeaseDisplay({
         </div>
       </div>
       <div className="min-w-0 flex-1">
-        {selected_lease ? (
+        {selectedLease ? (
           <LeaseTable
-            lease={selected_lease}
-            additional_lease_fields={additional_lease_fields_state.filter(
-              (field) => field.lease_id === selected_lease.id,
+            lease={selectedLease}
+            additional_lease_fields={updatedAdditionalLeaseFields.filter(
+              (field) => field.lease_id === selectedLease.id,
             )}
             onFieldAdded={(newField) =>
-              setAdditionalLeaseFieldsState([
-                ...additional_lease_fields_state,
+              setUpdatedAdditionalLeaseFields([
+                ...updatedAdditionalLeaseFields,
                 newField,
               ])
             }
+            onConfirmedUpdated={onConfirmedUpdated}
           />
         ) : (
           <h3> Select a lease to view and edit details</h3>
