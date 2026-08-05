@@ -25,7 +25,7 @@ export default function LeaseDisplay({
   }
 
   // Update the "confirmed" value in either leases or additioanal fields
-  function onConfirmedUpdated(cell: any) {
+  function onTableUpdated(cell: any, property: keyof TableRow) {
     const row = cell.getRow().getData();
     const newValue = cell.getValue();
     if (row.sourceTable === "leases") {
@@ -34,7 +34,7 @@ export default function LeaseDisplay({
             //if (selectedLease) needed for typscript
             if (selectedLease) {
                 if (lease.id === selectedLease.id) {
-                    lease[row.field].confirmed = newValue;
+                    lease[row.field][property] = newValue;
                     break;
                 }
             }
@@ -42,10 +42,10 @@ export default function LeaseDisplay({
         setUpdatedLeases(updatedUpdatedLeases);
     }
     if (row.sourceTable === "additional_lease_fields") {
-        let updatedFields = updatedAdditionalLeaseFields;
+        let updatedFields: any = updatedAdditionalLeaseFields;
         for (const field of updatedFields) {
             if (field.id === row.id) {
-                field.confirmed = newValue;
+                field[property] = newValue;
                 break;
             }
         }
@@ -69,8 +69,8 @@ export default function LeaseDisplay({
           ))}
         </div>
       </div>
-      <div className="min-w-0 flex-1">
         {selectedLease ? (
+          <div className="min-w-0 flex-1">
           <LeaseTable
             lease={selectedLease}
             additional_lease_fields={updatedAdditionalLeaseFields.filter(
@@ -82,12 +82,14 @@ export default function LeaseDisplay({
                 newField,
               ])
             }
-            onConfirmedUpdated={onConfirmedUpdated}
+            onTableUpdated={onTableUpdated}
           />
+          </div>
         ) : (
+        <div className="flex items-center justify-center w-full">
           <h3> Select a lease to view and edit details</h3>
+        </div>
         )}
-      </div>
     </div>
   );
 }
