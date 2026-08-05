@@ -1,6 +1,5 @@
 "use client";
 import "react-tabulator/lib/css/tabulator.min.css";
-import "react-tabulator/lib/styles.css";
 import { ReactTabulator } from "react-tabulator";
 import { Lease } from "@/models/Lease";
 import { TableRow } from "@/models/TableRow";
@@ -13,55 +12,8 @@ type LeaseTableProps = {
   lease: Lease;
   additional_lease_fields: AdditionalLeaseField[];
   onFieldAdded: (newField: AdditionalLeaseField) => void;
+  onConfirmedUpdated: (cell: any) => void;
 };
-
-const columns = [
-  {
-    title: "Key Information",
-    field: "field",
-    formatter: "textarea",
-    widthGrow: 1,
-    variableHeight: true,
-    headerSort: false,
-  },
-  {
-    title: "Value",
-    field: "value",
-    formatter: "textarea",
-    widthGrow: 3,
-    variableHeight: true,
-    headerSort: false,
-  },
-  {
-    title: "Confirmed",
-    field: "confirmed",
-    formatter: "tickCross",
-    editor: "tickCross",
-    widthGrow: 1,
-    headerSort: false,
-    cellEdited: function (cell: any) {
-      updateConfirmation(cell);
-    },
-  },
-  {
-    title: "Clauses",
-    field: "clauses",
-    formatter: "textarea",
-    widthGrow: 1,
-    variableHeight: true,
-    headerSort: false,
-  },
-  {
-    title: "ID",
-    field: "id",
-    visible: false,
-  },
-  {
-    title: "Source",
-    field: "sourceTable",
-    visible: false,
-  },
-];
 
 function isLeaseFieldObject(value: unknown): value is TableRow {
   return (
@@ -74,12 +26,57 @@ function isLeaseFieldObject(value: unknown): value is TableRow {
   );
 }
 
-export default function LeaseTable({
-  lease,
-  additional_lease_fields,
-  onFieldAdded,
-}: LeaseTableProps) {
+export default function LeaseTable({ lease, additional_lease_fields, onFieldAdded, onConfirmedUpdated}: LeaseTableProps) {
+    const columns = [
+    {
+        title: "Key Information",
+        field: "field",
+        formatter: "textarea",
+        widthGrow: 1,
+        variableHeight: true,
+        headerSort: false,
+    },
+    {
+        title: "Value",
+        field: "value",
+        formatter: "textarea",
+        widthGrow: 3,
+        variableHeight: true,
+        headerSort: false,
+    },
+    {
+        title: "Confirmed",
+        field: "confirmed",
+        formatter: "tickCross",
+        editor: "tickCross",
+        widthGrow: 1,
+        headerSort: false,
+        cellEdited: function(cell: any) {
+            updateConfirmation(cell);
+            onConfirmedUpdated(cell);
+        }
+    },
+    {
+        title: "Clauses",
+        field: "clauses",
+        formatter: "textarea",
+        widthGrow: 1,
+        variableHeight: true,
+        headerSort: false,
+    },
+    {
+        title: "ID",
+        field: "id",
+        visible: false,
+    },
+    {
+        title: "Source",
+        field: "sourceTable",
+        visible: false,
+    },
+  ];
   const data: TableRow[] = [];
+
   for (const [key, value] of Object.entries(lease)) {
     if (key === "id" || key === "title") {
       continue; // Skip the id and title fields
@@ -93,15 +90,6 @@ export default function LeaseTable({
         id: lease.id,
         sourceTable: "leases",
       });
-    } else {
-      data.push({
-        field: key,
-        value: "Field not found",
-        confirmed: false,
-        clauses: "",
-        id: lease.id,
-        sourceTable: "leases",
-      });
     }
   }
   if (additional_lease_fields.length !== 0) {
@@ -111,7 +99,7 @@ export default function LeaseTable({
         value: value.value,
         confirmed: value.confirmed,
         clauses: value.clauses,
-        id: value.id,
+        id: value.id, // if source table = "additional_lease_fields", id is row id
         sourceTable: "additional_lease_fields",
       });
     }
