@@ -6,13 +6,13 @@ import { TableRow } from "@/models/TableRow";
 import { AdditionalLeaseField } from "@/models/AdditionalLeaseField";
 import styles from "./leaseTable.module.css";
 import { addAdditionalLeaseField } from "@/database/addAdditionalLeaseField";
-import { updateConfirmation } from "@/database/updateConfirmation";
+import { updateDatabase } from "@/database/updateDatabase";
 
 type LeaseTableProps = {
   lease: Lease;
   additional_lease_fields: AdditionalLeaseField[];
   onFieldAdded: (newField: AdditionalLeaseField) => void;
-  onConfirmedUpdated: (cell: any) => void;
+  onTableUpdated: (cell: any, property: keyof TableRow) => void;
 };
 
 function isLeaseFieldObject(value: unknown): value is TableRow {
@@ -26,7 +26,7 @@ function isLeaseFieldObject(value: unknown): value is TableRow {
   );
 }
 
-export default function LeaseTable({ lease, additional_lease_fields, onFieldAdded, onConfirmedUpdated}: LeaseTableProps) {
+export default function LeaseTable({ lease, additional_lease_fields, onFieldAdded, onTableUpdated}: LeaseTableProps) {
     const columns = [
     {
         title: "Key Information",
@@ -35,6 +35,11 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         widthGrow: 1,
         variableHeight: true,
         headerSort: false,
+        editor: "input",
+        cellEdited: function(cell: any) {
+            updateDatabase(cell, "field");
+            onTableUpdated(cell, "field");
+        }
     },
     {
         title: "Value",
@@ -43,6 +48,11 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         widthGrow: 3,
         variableHeight: true,
         headerSort: false,
+        editor: "input",
+        cellEdited: function(cell: any) {
+            updateDatabase(cell, "value");
+            onTableUpdated(cell, "value");
+        }
     },
     {
         title: "Confirmed",
@@ -52,8 +62,8 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         widthGrow: 1,
         headerSort: false,
         cellEdited: function(cell: any) {
-            updateConfirmation(cell);
-            onConfirmedUpdated(cell);
+            updateDatabase(cell, "confirmed");
+            onTableUpdated(cell, "confirmed");
         }
     },
     {
@@ -63,6 +73,11 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         widthGrow: 1,
         variableHeight: true,
         headerSort: false,
+        editor: "input",
+        cellEdited: function(cell: any) {
+            updateDatabase(cell, "clauses");
+            onTableUpdated(cell, "clauses");
+        }
     },
     {
         title: "ID",
@@ -93,13 +108,13 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
     }
   }
   if (additional_lease_fields.length !== 0) {
-    for (const [key, value] of Object.entries(additional_lease_fields)) {
+    for (const field of additional_lease_fields) {
       data.push({
-        field: value.field,
-        value: value.value,
-        confirmed: value.confirmed,
-        clauses: value.clauses,
-        id: value.id, // if source table = "additional_lease_fields", id is row id
+        field: field.field,
+        value: field.value,
+        confirmed: field.confirmed,
+        clauses: field.clauses,
+        id: field.id, // if source table = "additional_lease_fields", id is row id
         sourceTable: "additional_lease_fields",
       });
     }
