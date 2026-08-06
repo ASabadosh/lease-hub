@@ -54,8 +54,8 @@ export default function LeaseDisplay({
   }
 
   return (
-    <div className="flex">
-      <div className="flex flex-col w-70 h-[600px] p-5 border-r border-b border-l border-gray-200 bg-white">
+    <div className="flex bg-white border-l border-b border-gray-200">
+      <div className="flex flex-col w-70 h-[600px] p-5 border-r border-gray-200">
         <h2 className="text-xl font-semibold text-gray-900">All Leases</h2>
         <div className="flex flex-col mt-4 gap-1">
           {updatedLeases.map((lease: Lease) => (
@@ -87,7 +87,7 @@ export default function LeaseDisplay({
           </div>
         ) : (
         <div className="flex items-center justify-center w-full">
-          <h3> Select a lease to view and edit details</h3>
+          <h3 className="text-gray-400"> Select a lease to view and edit details</h3>
         </div>
         )}
     </div>

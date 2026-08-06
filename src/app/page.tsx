@@ -9,8 +9,8 @@ export default async function Home() {
 
   if (leases === null || additional_lease_fields === null) {
     return (
-      <main>
-      <div className = "flex flex-col items-center justify-center h-screen">
+      <main className="w-full">
+      <div className = "flex items-center justify-center bg-white h-[600px] border-l border-b border-gray-200">
         <h2 className="text-xl font-semibold text-gray-900">
           Database connection failed
         </h2>
@@ -19,11 +19,14 @@ export default async function Home() {
     )
   } else if (leases.length === 0) {
     return (
-      <main>
-      <div className = "flex flex-col items-center justify-center h-screen">
+      <main className="w-full">
+      <div className = "flex items-center justify-center bg-white h-[600px] border-l border-b border-gray-200">
         <h2 className="text-xl font-semibold text-gray-900">
-          No Leases Found
+          No leases yet
         </h2>
+        <p>
+          Upload your first lease PDF to automatically extract key information
+        </p>
       </div>
       </main>
     )
