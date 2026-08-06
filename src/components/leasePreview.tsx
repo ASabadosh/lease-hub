@@ -10,7 +10,7 @@ type LeasePreviewProps = {
 export default function LeasePreview(props: LeasePreviewProps) {
     return (
         <div>
-            <h3 className="text-left text-sm font-semibold text-gray-900">
+            <h3 className="w-52 text-left text-sm font-semibold text-gray-900 break-words">
             {props.title}
             </h3>
         </div>
