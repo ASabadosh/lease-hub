@@ -27,6 +27,7 @@ const fieldSchema = {
 
 export default function UploadLease() {
     async function handleSubmit(formData: FormData){
+        "use server"
 
         const title = formData.get("lease-title") as string;
         const lease = formData.get("lease-pdf") as File;
@@ -50,7 +51,7 @@ export default function UploadLease() {
                     }, 
                     {
                         type: "text",  
-                        text:'Use the information in the given lease pdf to fill out the given json structure.  For each property\n   "term",\n    "rent",\n    "premises",\n    "security_deposit",\n    "maintenance_and_repairs",\n    "utilities",\n    "insurance",\n    "taxes",\n    "surrender",\n    "holding_over:",\n    "option_to_extend_lease",\n    "notices",\n    "attorney_fees")\nfill out the value property with the corresponding information from the lease and the clauses property with the source clauses for the extracted information. If the property is not specified in the lease, fill it in with nullL.\n\nFormat:\n- fill in clauses property like this: 16.16.2 16.3. Do not include anything except the numbers.\n- when filling in the value property emphasize brevity and accuracy. however adapt its length in relation to the amount of relevant information.'     
+                        text:'Use the information in the given lease pdf to fill out the given json structure.  For each property\n   "term",\n    "rent",\n    "premises",\n    "security_deposit",\n    "maintenance_and_repairs",\n    "utilities",\n    "insurance",\n    "taxes",\n    "surrender",\n    "holding_over:",\n    "option_to_extend_lease",\n    "notices",\n    "attorney_fees")\nfill out the value property with the corresponding information from the lease and the clauses property with the source clauses for the extracted information. If the property is not specified in the lease, fill it in with null.\n\nFormat:\n- fill in clauses property like this: 16.16.2 16.3. Do not include anything except the numbers.\n- when filling in the value property emphasize brevity and accuracy. however adapt its length in relation to the amount of relevant information.'     
                           
                     }
                 ]  
@@ -85,7 +86,7 @@ export default function UploadLease() {
                                 "Insurance",
                                 "Taxes",
                                 "Surrender",
-                                "Holding Over:",
+                                "Holding Over",
                                 "Option to Extend Lease",
                                 "Notices",
                                 "Attorney Fees",
