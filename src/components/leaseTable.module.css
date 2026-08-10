@@ -47,3 +47,8 @@
 .wrapper :global(.tabulator-col-resize-handle) {
   display: none;
 }
+
+:global(.break-words-cell) {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

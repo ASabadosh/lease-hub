@@ -39,7 +39,8 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         cellEdited: function(cell: any) {
             updateDatabase(cell, "field");
             onTableUpdated(cell, "field");
-        }
+        },
+        cssClass: "break-words-cell",
     },
     {
         title: "Value",
@@ -52,7 +53,8 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         cellEdited: function(cell: any) {
             updateDatabase(cell, "value");
             onTableUpdated(cell, "value");
-        }
+        },
+        cssClass: "break-words-cell",
     },
     {
         title: "Confirmed",
@@ -64,7 +66,7 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         cellEdited: function(cell: any) {
             updateDatabase(cell, "confirmed");
             onTableUpdated(cell, "confirmed");
-        }
+        },
     },
     {
         title: "Clauses",
@@ -77,7 +79,8 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         cellEdited: function(cell: any) {
             updateDatabase(cell, "clauses");
             onTableUpdated(cell, "clauses");
-        }
+        },
+        cssClass: "break-words-cell",
     },
     {
         title: "ID",

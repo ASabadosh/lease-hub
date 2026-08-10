@@ -20,7 +20,7 @@ export default async function Home() {
   } else if (leases.length === 0) {
     return (
       <main className="w-full">
-      <div className = "flex items-center justify-center bg-white h-[600px] border-l border-b border-gray-200">
+      <div className = "flex flex-col gap-3 items-center justify-center bg-white h-[600px] border-l border-b border-gray-200">
         <h2 className="text-xl font-semibold text-gray-900">
           No leases yet
         </h2>
