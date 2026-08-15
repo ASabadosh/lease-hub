@@ -1,5 +1,5 @@
 "use client"
-import QueryClaude from "@/app/actions/queryClaude";
+import queryClaude from "@/app/actions/queryClaude";
 import { useFormStatus } from "react-dom";
 import SubmitButton from "@/components/submitButton";
 
@@ -9,10 +9,28 @@ export default function UploadLease() {
     function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
 
+        if (!file){
+            return;
+        }
+        if (file.type !== "application/pdf") {
+            alert("File must be a PDF");
+            event.target.value = "";
+            return;
+        }
         if (file && file.size > 20 * 1024 * 1024) {
             alert("File must be under 20MB");
             event.target.value = "";
         }
+    }
+
+    function handleSubmit(formData: FormData) {
+        const file = formData.get("lease-pdf");
+
+        if (!(file instanceof File) || file.size == 0) {
+            alert("Must upload file");
+            return;
+        }
+        queryClaude(formData);
     }
 
     return (
@@ -28,7 +46,7 @@ export default function UploadLease() {
 
             </div>
             <form 
-            action={QueryClaude}
+            action={handleSubmit}
             >
             <div className="flex mt-5 gap-10">
                 <div className="flex flex-col gap-5 w-[700px]">
@@ -46,19 +64,13 @@ export default function UploadLease() {
                     <p className="tracking-tight text-sm font-semibold text-gray-900">
                          Lease PDF
                     </p>
-                    <label htmlFor="lease-pdf" className="w-full rounded-md border border-gray-200 h-[200px] flex items-center justify-center text-sm text-gray-400 bg-blue-50 text-center">
-                        <div>
-                        Drag and drop your PDF here
-                        <br/> 
-                        or
-                        <span className="text-blue-600"> browse files</span>
-                        </div>
+                    <label htmlFor="lease-pdf" className="w-full rounded-md border border-gray-200 h-[200px] flex items-center justify-center text-sm bg-blue-50 text-center cursor-pointer text-blue-600">
+                       Browse files
                     </label>
                     <input
                         name="lease-pdf"
                         id="lease-pdf"
                         type="file"
-                        required
                         className="hidden"
                         onChange={handleFileChange}
                     />
