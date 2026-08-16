@@ -23,14 +23,17 @@ export default function UploadLease() {
         }
     }
 
-    function handleSubmit(formData: FormData) {
+    async function handleSubmit(formData: FormData) {
         const file = formData.get("lease-pdf");
 
         if (!(file instanceof File) || file.size == 0) {
             alert("Must upload file");
             return;
         }
-        queryClaude(formData);
+        const success = await queryClaude(formData);
+        if (!success) {
+            alert("Lease processing failed");
+        }
     }
 
     return (
