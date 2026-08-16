@@ -1,8 +1,11 @@
 import LeaseDisplay from "@/components/leaseDisplay";
 import { getLeases } from "@/database/getLeases";
 import { getAdditionalLeaseFields } from "@/database/getAdditionalLeaseFields";
+import { connection } from "next/server";
 
 export default async function Home() {
+
+  await connection();
 
   const leases = await getLeases();
   const additional_lease_fields = await getAdditionalLeaseFields();
