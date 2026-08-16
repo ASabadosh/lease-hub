@@ -58,7 +58,7 @@ export default function LeaseDisplay({
       <div className="flex flex-col w-70 h-[600px] p-5 border-r border-gray-200">
         <h2 className="text-xl font-semibold text-gray-900">All Leases</h2>
         <div className="flex flex-col mt-4 gap-1 overflow-y-auto">
-          {updatedLeases.map((lease: Lease) => (
+          {updatedLeases.sort((a, b) => a.id - b.id).map((lease: Lease) => (
             <button
               onClick={() => handleClick(lease)}
               key={lease.id}
