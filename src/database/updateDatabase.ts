@@ -23,7 +23,7 @@ export async function updateDatabase(cell: any, property: keyof LeaseFieldObject
     } else {
         const { error } = await supabase.from("additional_lease_fields").update({ [property]: newValue }).eq("id", row.id);
         if (error) {
-            console.error("Error updating additioanl lease field:", error);
+            console.error("Error updating additional lease field:", error);
         }
     }
 }
