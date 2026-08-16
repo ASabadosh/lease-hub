@@ -1,6 +1,6 @@
 "use client";
 import "react-tabulator/lib/css/tabulator.min.css";
-import { ReactTabulator } from "react-tabulator";
+import { ReactTabulator, ColumnDefinition, } from "react-tabulator";
 import { Lease } from "@/models/Lease";
 import { TableRow } from "@/models/TableRow";
 import { AdditionalLeaseField } from "@/models/AdditionalLeaseField";
@@ -27,7 +27,7 @@ function isLeaseFieldObject(value: unknown): value is TableRow {
 }
 
 export default function LeaseTable({ lease, additional_lease_fields, onFieldAdded, onTableUpdated}: LeaseTableProps) {
-    const columns = [
+    const columns: ColumnDefinition[] = [
     {
         title: "Key Information",
         field: "field",
