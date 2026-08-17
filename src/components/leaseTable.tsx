@@ -29,6 +29,7 @@ function isLeaseFieldObject(value: unknown): value is TableRow {
 export default function LeaseTable({ lease, additional_lease_fields, onFieldAdded, onTableUpdated}: LeaseTableProps) {
     const columns: ColumnDefinition[] = [
     {
+      // displayed title of field
         title: "Key Information",
         field: "field",
         formatter: "textarea",
@@ -92,6 +93,12 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         field: "sourceTable",
         visible: false,
     },
+    // column of field in table 1 or null
+    {
+      title: "Column",
+      field: "column",
+      visible: false,
+    }
   ];
   const data: TableRow[] = [];
 
@@ -107,6 +114,7 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         clauses: value.clauses,
         id: lease.id,
         sourceTable: "leases",
+        column: key,
       });
     }
   }
@@ -119,6 +127,7 @@ export default function LeaseTable({ lease, additional_lease_fields, onFieldAdde
         clauses: field.clauses,
         id: field.id, // if source table = "additional_lease_fields", id is row id
         sourceTable: "additional_lease_fields",
+        column: null,
       });
     }
   }

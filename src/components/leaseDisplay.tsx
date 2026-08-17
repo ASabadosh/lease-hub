@@ -34,7 +34,7 @@ export default function LeaseDisplay({
             //if (selectedLease) needed for typscript
             if (selectedLease) {
                 if (lease.id === selectedLease.id) {
-                    lease[row.field][property] = newValue;
+                    lease[row.column][property] = newValue;
                     break;
                 }
             }

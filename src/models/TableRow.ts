@@ -7,4 +7,5 @@ export type TableRow = {
   clauses: string;
   id: number; //table row meta data
   sourceTable: string; //table row meta data
+  column: string | null;
 };

@@ -9,7 +9,7 @@ export async function updateDatabase(cell: any, property: keyof LeaseFieldObject
     const newValue = cell.getValue();
     const sourceTable = row.sourceTable;
     if (sourceTable === "leases") {
-        const editedColumn = row.field;
+        const editedColumn = row.column;
         const { data, error } = await supabase.from("leases").select("*").eq("id", row.id).single();
         if (error) {
             console.error("Error fetching lease field:", error);
