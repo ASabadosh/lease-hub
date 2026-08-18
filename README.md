@@ -21,15 +21,14 @@ Maintenance and Repairs
 - Allow users to manually add-to and edit lease data
 - All extracted data including user edits is stored in Supabase database
 - Track multiple leases from a single dashboard
-- Gracefully handle information the AI is unable to extract
-
 ## Screenshots:
-AI-Extracted Lease Data:
+###AI-Extracted Lease Data:
 View of extracted lease information with corresponding clauses and user confirmation. All cells are editable and changes are reflected in database. App gracefully handles information AI is unable to extract.
 <img width="1435" height="686" alt="Screenshot 2026-08-18 at 1 19 23 PM" src="https://github.com/user-attachments/assets/c4d752a6-d915-44bb-a90c-0b52fe096445" />
 
-Lease Upload with Loading Notification:
-<img width="1435" height="686" alt="Screenshot 2026-08-18 at 1 19 23 PM" src="https://github.com/user-attachments/assets/c11404dc-832b-4020-84c7-679497124984" />
+###Lease Upload with Loading Notification:
+<img width="1440" height="688" alt="Screenshot 2026-08-18 at 1 20 38 PM" src="https://github.com/user-attachments/assets/e7dd3321-66c5-40be-9527-791427c2490b" />
+
 
 ## Stack:
 - Frontend: Next.js
