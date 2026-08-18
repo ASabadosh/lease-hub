@@ -5,8 +5,7 @@ Most lease management is still surprisingly manual. Someone reads through a long
 
 The AI handles the tedious first pass. The rest of the application is built around making that extracted information useful, verifiable, editable, and easy to track over the lifetime of a lease.
 
-### Current Scope:
-The application was initially designed for a single user with a portfolio of commercial leases. The database architecture was designed with future multi-user support in mind, with authentication and user-level data isolation planned as future improvements.
+**Current Scope:** The application was initially designed for a single user with a portfolio of commercial leases. The database architecture was designed with future multi-user support in mind, with authentication and user-level data isolation planned as future improvements.
 
 ## What it does:
 - Upload and store commercial lease PDFs
@@ -20,15 +19,22 @@ Maintenance and Repairs
 - Store the relevant source clause alongside extracted information
 - Allow users to confirm automatically extracted data
 - Allow users to manually add-to and edit lease data
+- All extracted data including user edits is stored in Supabase database
 - Track multiple leases from a single dashboard
 - Gracefully handle information the AI is unable to extract
 
 ## Screenshots:
+AI-Extracted Lease Data:
+View of extracted lease information with corresponding clauses and user confirmation. All cells are editable and changes are reflected in database. App gracefully handles information AI is unable to extract.
+<img width="1435" height="686" alt="Screenshot 2026-08-18 at 1 19 23 PM" src="https://github.com/user-attachments/assets/c4d752a6-d915-44bb-a90c-0b52fe096445" />
+
+Lease Upload with Loading Notification:
+<img width="1435" height="686" alt="Screenshot 2026-08-18 at 1 19 23 PM" src="https://github.com/user-attachments/assets/c11404dc-832b-4020-84c7-679497124984" />
 
 ## Stack:
-Frontend: Next.js
-Backend: Node.js
-Database: Supabase
-AI: Anthropic Claude API
-Deployment: Vercel
-Other: Tailwind
+- Frontend: Next.js
+- Backend: Node.js
+- Database: Supabase
+- AI: Anthropic Claude API
+- Deployment: Vercel
+- Other: Tailwind
