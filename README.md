@@ -10,12 +10,12 @@ The AI handles the tedious first pass. The rest of the application is built arou
 ## What it does:
 - Upload and store commercial lease PDFs
 - Use AI to extract key lease information automatically
-- Organize extracted information into categories such as:
-Term
-Rent
-Premises
-Security Deposit
-Maintenance and Repairs
+- Organize extracted information into categories such as:<br>
+Term<br>
+Rent<br>
+Premises<br>
+Security Deposit<br>
+Maintenance and Repairs<br>
 - Store the relevant source clause alongside extracted information
 - Allow users to confirm automatically extracted data
 - Allow users to manually add-to and edit lease data
