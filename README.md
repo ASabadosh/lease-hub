@@ -1,5 +1,5 @@
 # lease-hub
-A lease parsing and storage app. Built to solve a real-world commercial lease management problem for a family business.
+A lease parsing and storage app. Built to solve a real-world commercial lease management problem for my dad.
 
 Most lease management is still surprisingly manual. Someone reads through a long commercial lease, pulls out the dates, parties, financial terms, renewal requirements, and important clauses, then tracks all of it somewhere else. Lease Hub does that work for you. Upload a lease and it uses AI to extract the information that actually matters, organizes it into a structured dashboard, and keeps the original clauses alongside each value so you can see where the information came from. Extracted data can be reviewed, edited, and confirmed.
 
